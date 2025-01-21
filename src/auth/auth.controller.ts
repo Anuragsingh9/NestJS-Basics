@@ -10,12 +10,14 @@ import { send } from 'process';
 import { comparePassword, hashPassword, sendHttpResponse } from 'src/helpers/helper';
 import { UserService } from 'src/user/user.service';
 import { CreateUserDto } from './register.dto';
+import { EmailService } from 'src/common/email.service';
+import { loginTemplate, registerTemplate } from 'src/email/email-template';
+require('dotenv').config();
 
 @Controller('auth')
-// @UseGuards(RolesGuard)
 export class AuthController {
 
-    constructor(private readonly authService: AuthService, private userService: UserService) { }
+    constructor(private readonly authService: AuthService, private userService: UserService, private emailService: EmailService) { }
 
     /**
      * This function is responsible for authenticating user and generating token
@@ -27,12 +29,15 @@ export class AuthController {
     @Post('login')
     async login(@Body(new ValidationPipe()) data: SignInDto): Promise<any> {
         try {
+            
             const userByEmail = await this.userService.getUserByEmail(data.email);
             if (!userByEmail) {
                 return sendHttpResponse(400, 'User not found', null);
             }
 
             const user = await this.authService.login(data.email, data.password);
+            this.emailService.sendEmail(user.email, 'Login Successful', 'Login Successful', loginTemplate(user));
+
             return sendHttpResponse(200, 'Login successful', user);
         } catch (error) {
             return sendHttpResponse(400, 'Error logging in', error.message);
@@ -44,17 +49,12 @@ export class AuthController {
         try {
             const hashedPassword = await hashPassword(data.password);
             const user = await this.userService.createUser({ ...data, password: hashedPassword });
+            this.emailService.sendEmail(user.email, 'Login Successful', 'Login Successful', registerTemplate(user));
+
             return sendHttpResponse(201, 'User created successfully', user);
         } catch (error) {
             return sendHttpResponse(400, 'Error creating user', error.message);
         }
     }
-
-    // @Get('profile')
-    // @Roles(Role.User)
-    // @UseGuards(AuthGuard)
-    // getProfile(@Request() req) {
-    //     return req.user;
-    // }
 }
 

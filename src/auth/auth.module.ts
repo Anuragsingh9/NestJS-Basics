@@ -3,23 +3,23 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UserModule } from 'src/user/user.module';
 import { JwtModule, JwtService } from '@nestjs/jwt';
-import { jwtConstants } from './constants'
+import { EmailService } from 'src/common/email.service';
 
 @Module({
   imports: [
     UserModule,
     JwtModule.register({
       global: true,
-      secret: jwtConstants.secret,
+      secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '1h' },
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService,EmailService],
   exports: [AuthService]
 })
 export class AuthModule {
   constructor() {
-    // console.log('JWT Secret:', jwtConstants.secret); // Check if the secret is loaded properly
+    // console.log('JWT Secret:', process.env.JWT_SECRET); // Check if the secret is loaded properly
   }
 }

@@ -9,11 +9,13 @@ import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/constants/roles.enum';
 import { hashPassword, sendHttpResponse } from 'src/helpers/helper';
 import { ApiResponseDto } from 'src/common/api-response.dto';
+import { EmailService } from 'src/common/email.service';
+import { registerTemplate } from 'src/email/email-template';
 
 @Controller('users')
 @UseGuards(AuthGuard, RolesGuard)
 export class UserController {
-    constructor(private readonly userService: UserService) { }
+    constructor(private readonly userService: UserService, private emailService: EmailService) { }
 
     @Get('/profile')
     async getLoggedInUserProfile(@Request() req) {
@@ -31,6 +33,8 @@ export class UserController {
         try {
             const hashedPassword = await hashPassword(data.password);
             const user = await this.userService.createUser({ ...data, password: hashedPassword });
+            this.emailService.sendEmail(user.email, 'Login Successful', 'Login Successful', registerTemplate(user));
+            
             return sendHttpResponse(201, 'User created successfully', user);
         } catch (error) {
             return sendHttpResponse(400, 'Error creating user', error.message);
