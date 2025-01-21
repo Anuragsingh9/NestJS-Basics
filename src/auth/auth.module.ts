@@ -20,6 +20,6 @@ import { jwtConstants } from './constants'
 })
 export class AuthModule {
   constructor() {
-    console.log('JWT Secret:', jwtConstants.secret); // Check if the secret is loaded properly
+    // console.log('JWT Secret:', jwtConstants.secret); // Check if the secret is loaded properly
   }
 }

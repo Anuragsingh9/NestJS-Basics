@@ -12,7 +12,6 @@ export class UserService {
 
     // Create a new user
     async createUser(data: Partial<User>): Promise<User> {
-        console.log('create >>',data.isActive = Boolean(data.isActive));
         const user = this.userRepository.create(data);
         return this.userRepository.save(user);
     }

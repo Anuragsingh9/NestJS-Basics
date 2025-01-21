@@ -15,7 +15,6 @@ export class AuthGuard implements CanActivate {
   constructor(private jwtService: JwtService, private userService: UserService) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    console.log('authhhhhh gaurd')
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
     if (!token) {

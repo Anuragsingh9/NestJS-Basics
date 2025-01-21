@@ -1,3 +1,4 @@
+import { IsNotEmpty } from 'class-validator';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -5,16 +6,16 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: false, length: 50 })
   name: string;
 
-  @Column()
+  @Column({ unique: true, nullable: false, length: 50 })
   email: string;
 
   @Column({ default: true })
   isActive: boolean;
 
-  @Column()
+  @Column({ nullable: false, length: 5000 })
   password: string;
 
   @Column({

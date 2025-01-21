@@ -6,15 +6,24 @@ import { CompanyService } from './company.service';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/constants/roles.enum';
 import { RolesGuard } from 'src/gaurds/roles.gaurd';
+import { sendHttpResponse } from 'src/helpers/helper';
 
 @Controller('company')
-@UseGuards(AuthGuard,RolesGuard)
+@UseGuards(AuthGuard, RolesGuard)
 export class CompanyController {
-    constructor(private companyService: CompanyService){}
+
+    constructor(private companyService: CompanyService) { }
 
     @Post()
     @Roles(Role.User)
-    async createCompany(@Body(new ValidationPipe()) data: CreateCompanyDto){
-        return this.companyService.createCompany(data);
+    async createCompany(@Body(new ValidationPipe()) data: CreateCompanyDto) {
+        try {
+            const company = await this.companyService.createCompany(data);
+            return sendHttpResponse(201, 'Record added successfully', company);
+
+        } catch (error) {
+            
+            return sendHttpResponse(400, 'Error adding record', error.message);
+        }
     }
 }
