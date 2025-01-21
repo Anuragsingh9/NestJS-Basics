@@ -29,7 +29,7 @@ export class AuthController {
     @Post('login')
     async login(@Body(new ValidationPipe()) data: SignInDto): Promise<any> {
         try {
-            
+
             const userByEmail = await this.userService.getUserByEmail(data.email);
             if (!userByEmail) {
                 return sendHttpResponse(400, 'User not found', null);
@@ -44,6 +44,11 @@ export class AuthController {
         }
     }
 
+    /**
+     * This function is responsible for registering a new user
+     * @param data 
+     * @returns 
+     */
     @Post('register')
     async register(@Body(new ValidationPipe()) data: CreateUserDto): Promise<any> {
         try {

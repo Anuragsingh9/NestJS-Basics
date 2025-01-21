@@ -15,8 +15,14 @@ import { registerTemplate } from 'src/email/email-template';
 @Controller('users')
 @UseGuards(AuthGuard, RolesGuard)
 export class UserController {
+    
     constructor(private readonly userService: UserService, private emailService: EmailService) { }
 
+    /**
+     * This function is responsible for fetching the logged in user profile
+     * @param req 
+     * @returns 
+     */
     @Get('/profile')
     async getLoggedInUserProfile(@Request() req) {
         try {
@@ -26,7 +32,11 @@ export class UserController {
         }
     }
 
-    // Create a new user
+    /**
+     * This function is responsible for creating a new user
+     * @param data 
+     * @returns 
+     */
     @Post()
     @Roles(Role.Admin)
     async createUser(@Body(new ValidationPipe()) data: CreateUserDto): Promise<ApiResponseDto<User>> {
@@ -34,14 +44,17 @@ export class UserController {
             const hashedPassword = await hashPassword(data.password);
             const user = await this.userService.createUser({ ...data, password: hashedPassword });
             this.emailService.sendEmail(user.email, 'Login Successful', 'Login Successful', registerTemplate(user));
-            
+
             return sendHttpResponse(201, 'User created successfully', user);
         } catch (error) {
             return sendHttpResponse(400, 'Error creating user', error.message);
         }
     }
 
-    // Retrieve all users
+    /**
+     * This function is responsible for fetching all users
+     * @returns 
+     */
     @Get()
     async getAllUsers(): Promise<ApiResponseDto<User[]>> {
         try {
@@ -53,7 +66,11 @@ export class UserController {
         }
     }
 
-    // Retrieve a single user by ID
+    /**
+     * This function is responsible for fetching a single user by ID
+     * @param id 
+     * @returns 
+     */
     @Get(':id')
     @Roles(Role.Admin)
     async getUserById(@Param('id') id: number): Promise<ApiResponseDto<User>> {
@@ -66,7 +83,12 @@ export class UserController {
         }
     }
 
-    // Update a user
+    /**
+     * This function is responsible for updating a user
+     * @param id 
+     * @param data 
+     * @returns 
+     */
     @Put(':id')
     @Roles(Role.Admin)
     async updateUser(@Param('id') id: number, @Body() data: Partial<User>): Promise<ApiResponseDto<User>> {
@@ -79,7 +101,11 @@ export class UserController {
         }
     }
 
-    // Delete a user
+    /**
+     * This function is responsible for deleting a user
+     * @param id 
+     * @returns 
+     */
     @Delete(':id')
     @Roles(Role.Admin)
     async deleteUser(@Param('id') id: number): Promise<ApiResponseDto<void>> {
@@ -91,17 +117,4 @@ export class UserController {
 
         }
     }
-
-    // @Get('/profile')
-    // async getLoggedInUserProfile() {
-    //     return 'User profile';
-    // }
-
-
-    // @Get('profile')
-    // @Roles(Role.User)
-    // @UseGuards(AuthGuard)
-    // getProfile(@Request() req) {
-    //     return req.user;
-    // }
 }

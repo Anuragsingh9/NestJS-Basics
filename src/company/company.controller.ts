@@ -14,6 +14,11 @@ export class CompanyController {
 
     constructor(private companyService: CompanyService) { }
 
+    /**
+     * This function is responsible for creating a new company
+     * @param data 
+     * @returns 
+     */
     @Post()
     @Roles(Role.User)
     async createCompany(@Body(new ValidationPipe()) data: CreateCompanyDto) {
