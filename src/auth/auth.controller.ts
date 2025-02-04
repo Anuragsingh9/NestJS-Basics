@@ -1,12 +1,6 @@
 import { Body, Controller, Get, Post, Request, UseGuards, ValidationPipe } from '@nestjs/common';
 import { SignInDto } from './signin.dto';
 import { AuthService } from './auth.service';
-import { User } from 'src/user/user.entity';
-import { AuthGuard } from './auth.guard';
-import { RolesGuard } from 'src/gaurds/roles.gaurd';
-import { Roles } from 'src/decorators/roles.decorator';
-import { Role } from 'src/constants/roles.enum';
-import { send } from 'process';
 import { comparePassword, hashPassword, sendHttpResponse } from 'src/helpers/helper';
 import { UserService } from 'src/user/user.service';
 import { CreateUserDto } from './register.dto';

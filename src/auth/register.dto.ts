@@ -1,4 +1,5 @@
-import { IsEmail, isNotEmpty, IsNotEmpty, MaxLength, MinLength } from 'class-validator';
+import { ArrayNotEmpty, IsArray, IsEmail, IsEnum, isNotEmpty, IsNotEmpty, MaxLength, MinLength } from 'class-validator';
+import { Role } from 'src/constants/roles.enum';
 
 export class CreateUserDto {
 
@@ -20,6 +21,9 @@ export class CreateUserDto {
 
   isActive: boolean;
 
-  roles: string[];
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsEnum(Role, { each: true, message: 'Invalid role given' }) // Ensures each value in the array is a valid UserRole
+  roles: Role[];
 
 }
