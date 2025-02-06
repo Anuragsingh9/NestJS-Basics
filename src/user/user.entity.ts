@@ -1,5 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { UserFeedback } from 'src/feedback/user_feedback.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class User {
@@ -24,4 +25,7 @@ export class User {
     default: ['user'],
   })
   roles: string[];
+
+  @OneToMany(() => UserFeedback, userFeedback => userFeedback.user)
+  userFeedbacks: UserFeedback[];
 }
