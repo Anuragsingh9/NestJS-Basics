@@ -1,15 +1,18 @@
-import { Body, Controller, Get, Param, Post, Req, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UseGuards, ValidationPipe, UploadedFile, UseInterceptors, BadRequestException } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { Company } from './company.entity';
 import { CreateCompanyDto } from './create-company.dto';
 import { CompanyService } from './company.service';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/constants/roles.enum';
 import { RolesGuard } from 'src/gaurds/roles.gaurd';
 import { sendHttpResponse } from 'src/helpers/helper';
-import { Request } from 'express';
+import { Express, Request } from 'express';
 import { EmailService } from 'src/common/email.service';
 import { registerCompanyTemplate, registerTemplate } from 'src/email/email-template';
+import { Multer } from 'multer';
 
 @Controller('company')
 @UseGuards(AuthGuard, RolesGuard)
@@ -58,5 +61,46 @@ export class CompanyController {
             return sendHttpResponse(404,'Record not found');
         }
         return sendHttpResponse(200,'Company details',company);
+    }
+
+    @Post('/upload-logo')
+    @Roles(Role.SuperAdmin,Role.Admin)
+    @UseInterceptors(FileInterceptor('file', {
+        storage: diskStorage({
+          destination: './uploads', // Set your desired upload directory
+          filename: (req, file, cb) => {
+            const fileExtName = extname(file.originalname);
+            const fileName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${fileExtName}`;
+            cb(null, fileName);
+          },
+        }),
+        fileFilter: (req, file, cb) => {
+          if (!file.mimetype.match(/\/(jpg|jpeg|png)$/)) {
+            return cb(new BadRequestException('Only image files are allowed!'), false);
+          }
+          cb(null, true);
+        },
+        limits: { fileSize: 2 * 1024 * 1024 }, // 2MB file size limit
+      }))
+
+      /**
+       * This function is responsible for uploading company logo
+       */
+    async uploadFile(@UploadedFile() file: Multer.File, @Body() body: any) {
+        try {
+            
+            if (!file) {
+                throw new BadRequestException('File is required!');
+            }
+            const { company_id } = body;
+            const isRecordUpdated = await this.companyService.uploadCompanyLogo(file.filename, company_id);
+            if(isRecordUpdated.affected === 0){
+                return sendHttpResponse(400,'Error updating company logo');
+            }
+            const companyDetails = await this.companyService.findCompany(company_id);
+            return sendHttpResponse(200, 'File uploaded successfully', companyDetails);
+        } catch (error) {
+            return sendHttpResponse(500,'Internal server error',error.message);
+        }
     }
 }

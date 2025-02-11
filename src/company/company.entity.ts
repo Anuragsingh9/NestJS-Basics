@@ -14,4 +14,7 @@ export class Company {
 
     @Column({ default: true })
     isActive: boolean;
+
+    @Column({ nullable: true })
+    company_logo: string;
 }

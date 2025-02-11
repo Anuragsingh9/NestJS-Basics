@@ -51,4 +51,12 @@ export class CompanyService {
             const company = await this.companyRepository.findOne({ where:{id: id}});
             return company;
         }
+
+        async uploadCompanyLogo(filename: string, companId: number){
+            const company = await this.companyRepository.update({ id: companId}, {company_logo: filename});
+            if(!company && company.affected === 0){
+                new Error('Error updating company logo');
+            }
+            return company;
+        }
 }
