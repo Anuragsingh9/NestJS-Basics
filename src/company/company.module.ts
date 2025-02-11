@@ -5,10 +5,11 @@ import { Company } from './company.entity';
 import { CompanyService } from './company.service';
 import { UserService } from 'src/user/user.service';
 import { UserModule } from 'src/user/user.module';
+import { EmailService } from 'src/common/email.service';
 
 @Module({
   controllers: [CompanyController],
-  providers: [CompanyService],
+  providers: [CompanyService,EmailService],
   imports: [
     UserModule,
     TypeOrmModule.forFeature([Company]),

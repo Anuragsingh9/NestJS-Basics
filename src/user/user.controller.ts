@@ -38,7 +38,7 @@ export class UserController {
      * @returns 
      */
     @Post()
-    @Roles(Role.Admin)
+    @Roles(Role.SuperAdmin, Role.Admin)
     async createUser(@Body(new ValidationPipe()) data: CreateUserDto): Promise<ApiResponseDto<User>> {
         try {
             const hashedPassword = await hashPassword(data.password);
@@ -56,6 +56,7 @@ export class UserController {
      * @returns 
      */
     @Get()
+    @Roles(Role.SuperAdmin, Role.Admin)
     async getAllUsers(): Promise<ApiResponseDto<User[]>> {
         try {
             const users = await this.userService.getAllUsers();
@@ -72,7 +73,7 @@ export class UserController {
      * @returns 
      */
     @Get(':id')
-    @Roles(Role.Admin)
+    @Roles(Role.SuperAdmin, Role.Admin)
     async getUserById(@Param('id') id: number): Promise<ApiResponseDto<User>> {
         try {
             const user = await this.userService.getUserById(id);
@@ -90,7 +91,7 @@ export class UserController {
      * @returns 
      */
     @Put(':id')
-    @Roles(Role.Admin)
+    @Roles(Role.SuperAdmin, Role.Admin)
     async updateUser(@Param('id') id: number, @Body() data: Partial<User>): Promise<ApiResponseDto<User>> {
         try {
             const user = await this.userService.updateUser(id, data);
@@ -107,7 +108,7 @@ export class UserController {
      * @returns 
      */
     @Delete(':id')
-    @Roles(Role.Admin)
+    @Roles(Role.SuperAdmin, Role.Admin)
     async deleteUser(@Param('id') id: number): Promise<ApiResponseDto<void>> {
         try {
             const usser = await this.userService.deleteUser(id);

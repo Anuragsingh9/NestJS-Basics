@@ -21,5 +21,6 @@ export class CreateUserDto {
   isActive: boolean;
 
   roles: string[];
-
+  
+  company_id: number;
 }

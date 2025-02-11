@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 import { UserFeedback } from 'src/feedback/user_feedback.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -25,6 +25,18 @@ export class User {
     default: ['user'],
   })
   roles: string[];
+
+  @Column({ nullable: true })
+  company_id: number;
+
+  @CreateDateColumn()
+      createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date; 
+
+  @DeleteDateColumn({ nullable: true }) // This column will store the deletion timestamp
+  deletedAt: Date | null;
 
   @OneToMany(() => UserFeedback, userFeedback => userFeedback.user)
   userFeedbacks: UserFeedback[];
