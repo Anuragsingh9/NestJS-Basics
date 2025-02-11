@@ -93,7 +93,14 @@ export class CompanyController {
                 throw new BadRequestException('File is required!');
             }
             const { company_id } = body;
+            const companyExist = await this.companyService.findCompany(company_id);
+
+            if(!companyExist){
+                return sendHttpResponse(404,'Company not found');
+            }
+
             const isRecordUpdated = await this.companyService.uploadCompanyLogo(file.filename, company_id);
+            
             if(isRecordUpdated.affected === 0){
                 return sendHttpResponse(400,'Error updating company logo');
             }
