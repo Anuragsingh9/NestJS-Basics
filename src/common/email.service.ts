@@ -17,7 +17,7 @@ export class EmailService {
     });
   }
 
- 
+
   async sendEmail(to: string, subject: string, text: string, html: string): Promise<void> {
     const mailOptions = {
       from: 'your-email@example.com',

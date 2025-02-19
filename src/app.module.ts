@@ -4,6 +4,9 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { CompanyModule } from './company/company.module';
 import { FeedbackModule } from './feedback/feedback.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { CronService } from './cron/cron.service';
+import { EmailService } from './common/email.service';
 
 @Module({
   imports: [
@@ -13,16 +16,19 @@ import { FeedbackModule } from './feedback/feedback.module';
       port: parseInt(process.env.DB_PORT),
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,  
+      database: process.env.DB_DATABASE,
       autoLoadEntities: true, // Automatically load entities
       synchronize: true, // Sync entities with the database (use only in development)
     }),
+    ScheduleModule.forRoot(),
     AuthModule,
     UserModule,
     CompanyModule,
     FeedbackModule,
   ],
   providers: [
+    CronService,
+    EmailService
     // {
     //   provide: APP_GUARD,
     //   useClass: AuthGuard,

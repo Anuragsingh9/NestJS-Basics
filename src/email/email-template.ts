@@ -28,7 +28,6 @@ export function registerTemplate(data: any): string {
 }
 
 export function registerCompanyTemplate(data: any): string {
-    console.log('data >>>',data)
     const html = `
         <html>
             <body>
@@ -36,6 +35,19 @@ export function registerCompanyTemplate(data: any): string {
                 <p>You have successfully registered to our platform.</p>
                 <p>Your password is: ${data.company_email}. This is an auto generated password. Please change it once you login.</p><br>
                 <p>Thank you for using our platform.</p>
+            </body>
+        </html>
+    `;
+
+    return html;
+}
+
+export function cronJobTesting(): string {
+    const html = `
+        <html>
+            <body>
+                <p>Hi,</p>
+                <p>This mail is send through cron job from Nest JS.</p>
             </body>
         </html>
     `;
