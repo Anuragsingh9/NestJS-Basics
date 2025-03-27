@@ -1,11 +1,11 @@
 import { Body, Controller, Get, Post, Req, Request, UseGuards, ValidationPipe } from '@nestjs/common';
 import { SignInDto } from './signin.dto';
 import { AuthService } from './auth.service';
-import { comparePassword, hashPassword, sendHttpResponse } from 'src/helpers/helper';
-import { UserService } from 'src/user/user.service';
+import { comparePassword, hashPassword, sendHttpResponse } from '../../src/helpers/helper';
+import { UserService } from '../../src/user/user.service';
 import { CreateUserDto } from './register.dto';
-import { EmailService } from 'src/common/email.service';
-import { loginTemplate, registerTemplate } from 'src/email/email-template';
+import { EmailService } from '../../src/common/email.service';
+import { loginTemplate, registerTemplate } from '../../src/email/email-template';
 require('dotenv').config();
 
 @Controller('auth')

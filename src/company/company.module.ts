@@ -3,9 +3,9 @@ import { CompanyController } from './company.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Company } from './company.entity';
 import { CompanyService } from './company.service';
-import { UserService } from 'src/user/user.service';
-import { UserModule } from 'src/user/user.module';
-import { EmailService } from 'src/common/email.service';
+import { UserService } from '../../src/user/user.service';
+import { UserModule } from '../../src/user/user.module';
+import { EmailService } from '../../src/common/email.service';
 
 @Module({
   controllers: [CompanyController],

@@ -4,7 +4,7 @@ import { FeedbackService } from './feedback.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Feedback } from './feedback.entity';
 import { UserFeedback } from './user_feedback.entity';
-import { UserModule } from 'src/user/user.module';
+import { UserModule } from '../../src/user/user.module';
 
 @Module({
   imports: [UserModule,TypeOrmModule.forFeature([Feedback,UserFeedback])],

@@ -1,5 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
-import { UserFeedback } from 'src/feedback/user_feedback.entity';
+import { UserFeedback } from '../../src/feedback/user_feedback.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
 @Entity()

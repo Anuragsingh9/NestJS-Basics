@@ -3,14 +3,14 @@ import { UserService } from './user.service';
 import { User } from './user.entity';
 import { CreateUserDto } from './create-user.dto';
 import { ValidationPipe } from '@nestjs/common';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { RolesGuard } from 'src/gaurds/roles.gaurd';
-import { Roles } from 'src/decorators/roles.decorator';
-import { Role } from 'src/constants/roles.enum';
-import { hashPassword, sendHttpResponse } from 'src/helpers/helper';
-import { ApiResponseDto } from 'src/common/api-response.dto';
-import { EmailService } from 'src/common/email.service';
-import { registerTemplate } from 'src/email/email-template';
+import { AuthGuard } from '../../src/auth/auth.guard';
+import { RolesGuard } from '../../src/gaurds/roles.gaurd';
+import { Roles } from '../../src/decorators/roles.decorator';
+import { Role } from '../../src/constants/roles.enum';
+import { hashPassword, sendHttpResponse } from '../../src/helpers/helper';
+import { ApiResponseDto } from '../../src/common/api-response.dto';
+import { EmailService } from '../../src/common/email.service';
+import { registerTemplate } from '../../src/email/email-template';
 
 @Controller('users')
 @UseGuards(AuthGuard, RolesGuard)
