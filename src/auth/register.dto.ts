@@ -1,5 +1,5 @@
 import { ArrayNotEmpty, IsArray, IsEmail, IsEnum, isNotEmpty, IsNotEmpty, MaxLength, MinLength } from 'class-validator';
-import { Role } from 'src/constants/roles.enum';
+import { Role } from '../../src/constants/roles.enum';
 
 export class CreateUserDto {
 

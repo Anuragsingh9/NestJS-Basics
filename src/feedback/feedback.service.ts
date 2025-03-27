@@ -4,7 +4,7 @@ import { Feedback } from './feedback.entity';
 import { Repository } from 'typeorm';
 import { UserFeedback } from './user_feedback.entity';
 import { AddFeedbackDto } from './add-feedback.dto';
-import { AuthUser } from 'src/common/interfaces/auth.interface';
+import { AuthUser } from '../../src/common/interfaces/auth.interface';
 
 @Injectable()
 export class FeedbackService {

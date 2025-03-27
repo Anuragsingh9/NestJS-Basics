@@ -2,16 +2,16 @@ import { Body, Controller, Get, Param, Post, Req, UseGuards, ValidationPipe, Upl
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../../src/auth/auth.guard';
 import { CreateCompanyDto } from './create-company.dto';
 import { CompanyService } from './company.service';
-import { Roles } from 'src/decorators/roles.decorator';
-import { Role } from 'src/constants/roles.enum';
-import { RolesGuard } from 'src/gaurds/roles.gaurd';
-import { sendHttpResponse } from 'src/helpers/helper';
+import { Roles } from '../../src/decorators/roles.decorator';
+import { Role } from '../../src/constants/roles.enum';
+import { RolesGuard } from '../../src/gaurds/roles.gaurd';
+import { sendHttpResponse } from '../../src/helpers/helper';
 import { Express, Request } from 'express';
-import { EmailService } from 'src/common/email.service';
-import { registerCompanyTemplate, registerTemplate } from 'src/email/email-template';
+import { EmailService } from '../../src/common/email.service';
+import { registerCompanyTemplate, registerTemplate } from '../../src/email/email-template';
 import { Multer } from 'multer';
 
 @Controller('company')

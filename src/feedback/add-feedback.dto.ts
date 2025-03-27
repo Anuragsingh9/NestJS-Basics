@@ -1,5 +1,5 @@
 import { IsEmail, IsEnum, isNotEmpty, IsNotEmpty, MaxLength, MinLength } from 'class-validator';
-import { FEEDBACK_TYPE } from 'src/constants/roles.enum';
+import { FEEDBACK_TYPE } from '../../src/constants/roles.enum';
 
 export class AddFeedbackDto {
 

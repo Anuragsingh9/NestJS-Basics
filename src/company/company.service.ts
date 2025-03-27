@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Company } from './company.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserService } from 'src/user/user.service';
-import { hashPassword } from 'src/helpers/helper';
+import { UserService } from '../../src/user/user.service';
+import { hashPassword } from '../../src/helpers/helper';
 
 @Injectable()
 export class CompanyService {

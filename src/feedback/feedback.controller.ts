@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Req, UseGuards, ValidationPipe } from '@nestjs/common';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { RolesGuard } from 'src/gaurds/roles.gaurd';
-import { sendHttpResponse } from 'src/helpers/helper';
+import { AuthGuard } from '../../src/auth/auth.guard';
+import { RolesGuard } from '../../src/gaurds/roles.gaurd';
+import { sendHttpResponse } from '../../src/helpers/helper';
 import { AddFeedbackDto } from './add-feedback.dto';
 import { Request } from 'express';
 import { FeedbackService } from './feedback.service';
