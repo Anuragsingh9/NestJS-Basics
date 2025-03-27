@@ -1,7 +1,7 @@
 import { MaxLength, MinLength } from 'class-validator';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
 import { UserFeedback } from './user_feedback.entity';
-import { FEEDBACK_TYPE } from 'src/constants/roles.enum';
+import { FEEDBACK_TYPE } from '../../src/constants/roles.enum';
 
 @Entity()
 export class Feedback {
