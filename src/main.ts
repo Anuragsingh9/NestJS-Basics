@@ -8,5 +8,6 @@ async function bootstrap() {
   app.use(bodyParser.urlencoded({ extended: true })); // Handle form data
   app.setGlobalPrefix('api');
   await app.listen(process.env.PORT ?? 3000);
+  console.log(`App running on port: ${process.env.PORT}`);
 }
 bootstrap();
