@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { User } from './user.entity';
 import { CreateUserDto } from './create-user.dto';
 import { ValidationPipe } from '@nestjs/common';
-import { AuthGuard } from '../../src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 import { RolesGuard } from '../../src/gaurds/roles.gaurd';
 import { Roles } from '../../src/decorators/roles.decorator';
 import { Role } from '../../src/constants/roles.enum';
